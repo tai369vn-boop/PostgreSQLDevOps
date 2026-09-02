@@ -14,7 +14,7 @@ spec:
       containers:
         - name: sqitch-migrate
           # Doi tag nay = mo phong "commit moi trong Git" o Phase 3
-          image: <YOUR_DOCKERHUB_USERNAME>/insurance-db-migrator:v1
+          image: tai369vn/insurance-db-migrator:v1
           env:
             - name: SQITCH_TARGET
               value: "db:pg://app_user@insurance-db-rw.insurance-system.svc:5432/pocdb"

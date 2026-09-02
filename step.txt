@@ -80,3 +80,6 @@ kubectl logs -n insurance-system -l job-name=insurance-db-migrate
 
 docker build -t tai369vn/insurance-db-migrator:v2 -f Dockerfile.migrator .
 docker push tai369vn/insurance-db-migrator:v2
+
+cd D:\demoHA\db-migrations
+sqitch add add_notes_column --requires create_contracts_table -n "Them cot notes vao contracts"

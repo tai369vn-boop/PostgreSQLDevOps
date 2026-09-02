@@ -51,6 +51,8 @@ kubectl apply --server-side --force-conflicts -n argocd -f https://raw.githubuse
 
 kubectl get pods -n argocd
 
+kubectl get application insurance-db-platform -n argocd -o jsonpath='{.status.resources}'
+
 kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -n argocd
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
@@ -59,11 +61,10 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 Đăng nhập với username admin và password vừa lấy được: VXZtiugXapwAsaeX
 
-Git - 
+Git -
 git config --global user.email "tai.369.vn@gmail.com"
 git config --global user.name "Tai Nguyen"
 
-git remote add origin https://github.com/tai369vn-boop/gitops-cnpg-lab.git
 git remote add origin https://github.com/tai369vn-boop/PostgreSQLDevOps.git
 
 docker build -t tai369vn/insurance-db-migrator:v1 -f Dockerfile.migrator
@@ -76,3 +77,6 @@ kubectl apply -f D:\demoHA\k8s-manifests\00-argocd-application.yaml
 
 kubectl get jobs -n insurance-system
 kubectl logs -n insurance-system -l job-name=insurance-db-migrate
+
+docker build -t tai369vn/insurance-db-migrator:v2 -f Dockerfile.migrator .
+docker push tai369vn/insurance-db-migrator:v2

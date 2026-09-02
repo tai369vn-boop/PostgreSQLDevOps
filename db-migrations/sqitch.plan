@@ -3,3 +3,4 @@
 
 create_contracts_table 2026-08-22T07:28:04Z root <root@vm> # Tao bang contracts
 add_claims_table [create_contracts_table] 2026-08-22T07:28:31Z root <root@vm> # Tao bang claims, tham chieu contracts
+add_notes_column --requires create_contracts_table -n "Them cot notes vao contracts"

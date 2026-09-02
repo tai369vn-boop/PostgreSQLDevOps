@@ -1,0 +1,3 @@
+BEGIN;
+ALTER TABLE contracts DROP COLUMN notes;
+COMMIT;

@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/<YOUR_GITHUB_USERNAME>/gitops-cnpg-lab.git
+    repoURL: https://github.com/tai369vn-boop/PostgreSQLDevOps.git
     targetRevision: main
     path: k8s-manifests
 

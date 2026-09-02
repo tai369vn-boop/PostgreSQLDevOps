@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: insurance-db-platform
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/<YOUR_GITHUB_USERNAME>/gitops-cnpg-lab.git
+    targetRevision: main
+    path: k8s-manifests
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: insurance-system
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

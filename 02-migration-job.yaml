@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: insurance-db-migrate
+  namespace: insurance-system
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sqitch-migrate
+          # Doi tag nay = mo phong "commit moi trong Git" o Phase 3
+          image: <YOUR_DOCKERHUB_USERNAME>/insurance-db-migrator:v1
+          env:
+            - name: SQITCH_TARGET
+              value: "db:pg://app_user@insurance-db-rw.insurance-system.svc:5432/pocdb"
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: insurance-db-app
+                  key: password

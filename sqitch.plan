@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=insurance_db
+
+create_contracts_table 2026-08-22T07:28:04Z root <root@vm> # Tao bang contracts
+add_claims_table [create_contracts_table] 2026-08-22T07:28:31Z root <root@vm> # Tao bang claims, tham chieu contracts

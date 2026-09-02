@@ -1,0 +1,44 @@
+@"
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+  - role: worker
+  - role: worker
+  - role: worker
+"@ | Out-File -Encoding utf8 D:\demoHA\kind-config.yaml
+
+kind create cluster --name pg-lab --config D:\demoHA\kind-config.yaml
+
+kubectl apply --server-side -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.29/releases/cnpg-1.29.2.yaml
+
+kubectl rollout status deployment -n cnpg-system cnpg-controller-manager
+
+kubectl create namespace insurance-system
+
+kubectl apply -f D:\demoHA\k8s-manifests\01-cnpg-cluster.yaml
+
+kubectl get pods -n insurance-system -w
+
+kind get kubeconfig --name pg-lab > $env:USERPROFILE\.kube\config
+
+kubectl cnpg status insurance-db -n insurance-system
+
+kubectl get pods -n insurance-system -o wide
+
+kubectl get secret insurance-db-app -n insurance-system -o jsonpath="{.data.password}" | ForEach-Object { [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_)) }
+
+V0XlzoyCNMTf7MCnQpLqdj3i96dhEg1hiV9klj9NQPaNynQ9Nsjt6hjDpuIjFMEe
+
+kubectl port-forward -n insurance-system svc/insurance-db-rw 5432:5432
+
+psql -h localhost -p 5432 -U app_user -d pocdb
+
+kubectl cnpg status insurance-db -n insurance-system
+
+kubectl delete pod insurance-db-1 -n insurance-system --grace-period=0 --force
+
+kubectl get pods -n insurance-system -w
+
+kubectl logs -n cnpg-system -l app.kubernetes.io/name=cloudnative-pg -f
+

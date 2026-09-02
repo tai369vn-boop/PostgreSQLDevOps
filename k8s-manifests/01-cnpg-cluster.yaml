@@ -1,0 +1,24 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: insurance-db
+  namespace: insurance-system
+spec:
+  instances: 3   # 1 primary tu dong bau + 2 replica
+
+  bootstrap:
+    initdb:
+      database: pocdb
+      owner: app_user
+
+  storage:
+    size: 1Gi
+    storageClass: standard   # kind dung storage class mac dinh "standard" (local-path-provisioner)
+
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"

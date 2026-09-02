@@ -1,0 +1,10 @@
+FROM debian:12-slim
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends sqitch libdbd-pg-perl postgresql-client && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /migrations
+COPY db-migrations/ .
+
+ENTRYPOINT ["sh", "-c", "sqitch deploy \"$SQITCH_TARGET\" --verify"]

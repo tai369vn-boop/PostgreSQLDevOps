@@ -59,7 +59,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 Đăng nhập với username admin và password vừa lấy được: VXZtiugXapwAsaeX
 
-Git - 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
+Git - 
 git config --global user.email "tai.369.vn@gmail.com"
 git config --global user.name "Tai Nguyen"
 

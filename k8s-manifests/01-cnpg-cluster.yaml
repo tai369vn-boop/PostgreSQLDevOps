@@ -4,7 +4,7 @@ metadata:
   name: insurance-db
   namespace: insurance-system
 spec:
-  instances: 4   # 1 primary tu dong bau + 2 replica
+  instances: 3   # 1 primary tu dong bau + 2 replica
 
   bootstrap:
     initdb:
@@ -13,7 +13,7 @@ spec:
 
   storage:
     size: 1Gi
-    storageClass: standard   # kind dung storage class mac dinh "standard" (local-path-provisioner)
+    storageClass: local-path   # kind dung storage class mac dinh "standard" (local-path-provisioner)
 
   resources:
     requests:

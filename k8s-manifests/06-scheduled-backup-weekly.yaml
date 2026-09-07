@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: insurance-db-weekly
+  namespace: insurance-system
+spec:
+  schedule: "0 0 1 * * 0"      # 01:00:00 moi Chu Nhat
+  backupOwnerReference: self
+  cluster:
+    name: insurance-db
+  method: barmanObjectStore
+  target: prefer-standby

@@ -4,7 +4,7 @@ metadata:
   name: insurance-db
   namespace: insurance-system
 spec:
-  instances: 4   # 1 primary tu dong bau + 2 replica
+  instances: 3   # 1 primary tu dong bau + 2 replica
 
   bootstrap:
     initdb:
@@ -13,8 +13,13 @@ spec:
 
   storage:
     size: 1Gi
-    storageClass: local-path   # kind dung storage class mac dinh "standard" (local-path-provisioner)
+    storageClass: csi-hostpath-sc   # kind dung storage class mac dinh "standard" (local-path-provisioner)
 
+  backup:
+    volumeSnapshot:
+      className: csi-hostpath-snapclass
+      online: true
+      
   resources:
     requests:
       memory: "256Mi"
@@ -22,29 +27,3 @@ spec:
     limits:
       memory: "512Mi"
       cpu: "500m"
-
-  # ============================================================
-  # KHOI BACKUP - ap dung cho ca daily (volumeSnapshot) va
-  # weekly (barmanObjectStore), khai bao chung o cap Cluster
-  # ============================================================
-  backup:
-     # --- Cau hinh cho phuong thuc barmanObjectStore (dung cho Weekly) ---
-    barmanObjectStore:
-      destinationPath: "s3://insurance-db-backups/"
-      endpointURL: "http://minio.minio.svc.cluster.local:9000"   # object storage noi bo
-      s3Credentials:
-        accessKeyId:
-          name: backup-storage-creds
-          key: ACCESS_KEY_ID
-        secretAccessKey:
-          name: backup-storage-creds
-          key: ACCESS_SECRET_KEY
-      wal:
-        compression: gzip
-        maxParallel: 4
-      data:
-        compression: gzip
-        jobs: 2
-
-    # --- Retention policy: ap dung cho "recovery window" cua CA CUM ---
-    retentionPolicy: "30d"

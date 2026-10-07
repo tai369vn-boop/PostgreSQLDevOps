@@ -4,7 +4,7 @@ metadata:
   name: insurance-db
   namespace: insurance-system
 spec:
-  instances: 4   # 1 primary tu dong bau + 2 replica
+  instances: 3   # 1 primary tu dong bau + 2 replica
 
   bootstrap:
     initdb:
@@ -13,13 +13,8 @@ spec:
 
   storage:
     size: 1Gi
-    storageClass: csi-hostpath-sc   # kind dung storage class mac dinh "standard" (local-path-provisioner)
-
-  backup:
-    volumeSnapshot:
-      className: csi-hostpath-snapclass
-      online: true
-      
+    storageClass: local-path
+    
   resources:
     requests:
       memory: "256Mi"

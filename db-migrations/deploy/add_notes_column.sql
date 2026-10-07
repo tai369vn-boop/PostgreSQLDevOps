@@ -1,3 +1,0 @@
-BEGIN;
-ALTER TABLE contracts ADD COLUMN notes TEXT;
-COMMIT;

@@ -5,7 +5,6 @@ metadata:
   namespace: insurance-system
   annotations:
     argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
 spec:
   backoffLimit: 3
   template:

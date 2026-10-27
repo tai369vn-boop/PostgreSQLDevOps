@@ -23,17 +23,8 @@ spec:
       memory: "512Mi"
       cpu: "500m"
       
-  backup:
-    # Retention la 1 GIA TRI DUY NHAT cho ca cluster (khong chia daily/weekly rieng)
-    retentionPolicy: "7d"
-    barmanObjectStore:
-      # Dinh dang cho emulator Azure: http://<host>:<port>/<ten-account>/<container>
-      destinationPath: http://azurite.azurite-system.svc.cluster.local:10000/devstoreaccount1/cnpg-backups
-      azureCredentials:
-        connectionString:
-          name: azure-creds
-          key: AZURE_CONNECTION_STRING
-      wal:
-        compression: gzip
-      data:
-        compression: gzip         
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true            # plugin dam nhiem luu WAL len ObjectStore
+      parameters:
+        barmanObjectName: azurite-store   # ten ObjectStore o file 03       

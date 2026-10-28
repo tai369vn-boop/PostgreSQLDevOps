@@ -21,10 +21,4 @@ spec:
       cpu: "250m"
     limits:
       memory: "512Mi"
-      cpu: "500m"
-      
-  plugins:
-    - name: barman-cloud.cloudnative-pg.io
-      isWALArchiver: true            # plugin dam nhiem luu WAL len ObjectStore
-      parameters:
-        barmanObjectName: azurite-store   # ten ObjectStore o file 03       
+      cpu: "500m"   
